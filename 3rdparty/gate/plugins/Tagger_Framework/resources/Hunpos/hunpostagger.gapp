@@ -2,15 +2,98 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../../../TaggerFramework</urlString>
+        <urlString>$relpath$../../../../../../../Ontology%20Learning%20Tool/3rdparty/gate/gate-7.0-build4195-ALL/plugins/TaggerFramework</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../../../ANNIE</urlString>
+        <urlString>$gatehome$plugins/Tagger_Framework/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$gatehome$plugins/ANNIE/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../../../../Ontology%20Learning%20Tool/3rdparty/gate/gate-7.0-build4195-ALL/plugins/ANNIE</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../../../../Ontology%20Learning%20Tool/3rdparty/gate/gate-7.0-build4195-ALL/plugins/Tagger_Framework</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$gatehome$plugins/TaggerFramework</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../gate/plugins/ANNIE/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../Tagger_Framework/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../../../../../bin/GATE-4.0/plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
-  <application class="gate.util.persistence.ConditionalControllerPersistence">
+  <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+    <corpus class="gate.util.persistence.CorpusPersistence">
+      <docList>
+        <gate.util.persistence.LRPersistence>
+          <resourceType>gate.corpora.DocumentImpl</resourceType>
+          <resourceName>Manskl_rattigh.pdf_00033</resourceName>
+          <initParams class="gate.util.persistence.MapPersistence">
+            <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+            <localMap>
+              <entry>
+                <string>markupAware</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>stringContent</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>encoding</string>
+                <string>UTF-8</string>
+              </entry>
+              <entry>
+                <string>sourceUrlStartOffset</string>
+                <null/>
+              </entry>
+              <entry>
+                <string>preserveOriginalContent</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>collectRepositioningInfo</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>sourceUrl</string>
+                <gate.util.persistence.PersistenceManager-URLHolder>
+                  <urlString>$relpath$../../../../../../../../uni/uppsala/2011-2012/thesis/data/Riksdagen/Manskl_rattigh.pdf</urlString>
+                </gate.util.persistence.PersistenceManager-URLHolder>
+              </entry>
+              <entry>
+                <string>mimeType</string>
+                <null/>
+              </entry>
+              <entry>
+                <string>sourceUrlEndOffset</string>
+                <null/>
+              </entry>
+            </localMap>
+          </initParams>
+        </gate.util.persistence.LRPersistence>
+      </docList>
+      <resourceType>gate.corpora.CorpusImpl</resourceType>
+      <resourceName>Corpus for Manskl_rattigh.pdf_00033</resourceName>
+      <initParams class="gate.util.persistence.MapPersistence">
+        <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+        <localMap>
+          <entry>
+            <string>documentsList</string>
+            <null/>
+          </entry>
+        </localMap>
+      </initParams>
+    </corpus>
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
@@ -38,8 +121,16 @@
                   <null/>
                 </entry>
                 <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>keepOriginalMarkupsAS</string>
                   <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>setsToRemove</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -57,13 +148,15 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>annotationSetName</string>
-                  <string></string>
+                  <string>Token</string>
                 </entry>
                 <entry>
                   <string>document</string>
@@ -79,7 +172,7 @@
                 <entry>
                   <string>rulesURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../../ANNIE/resources/tokeniser/DefaultTokeniser.rules</urlString>
+                    <urlString>$relpath$../../../../gate/plugins/ANNIE/resources/tokeniser/DefaultTokeniser.rules</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -96,6 +189,8 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -126,13 +221,13 @@
                 <entry>
                   <string>gazetteerListsURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../../ANNIE/resources/sentenceSplitter/gazetteer/lists.def</urlString>
+                    <urlString>$relpath$../../../../gate/plugins/ANNIE/resources/sentenceSplitter/gazetteer/lists.def</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>transducerURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../../ANNIE/resources/sentenceSplitter/grammar/main.jape</urlString>
+                    <urlString>$relpath$../../../../gate/plugins/ANNIE/resources/sentenceSplitter/grammar/main.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -145,6 +240,8 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -154,12 +251,12 @@
                   <string>Token</string>
                 </entry>
                 <entry>
-                  <string>regex</string>
-                  <string>(.+)	(.+)	</string>
+                  <string>inputASName</string>
+                  <string>Token</string>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
-                  <null/>
+                  <string>regex</string>
+                  <string>(.+)	(.+)	</string>
                 </entry>
                 <entry>
                   <string>featureMapping</string>
@@ -183,12 +280,12 @@
                 </entry>
                 <entry>
                   <string>debug</string>
-                  <boolean>false</boolean>
+                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>taggerBinary</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../../../../../GATE/gate/plugins/TaggerFramework/resources/Hunpos/runhunpos</urlString>
+                    <urlString>$relpath$runhunpos</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -208,22 +305,26 @@
                   <null/>
                 </entry>
                 <entry>
+                  <string>inputTemplate</string>
+                  <string>${string}</string>
+                </entry>
+                <entry>
                   <string>failOnUnmappableCharacter</string>
-                  <boolean>false</boolean>
+                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>outputASName</string>
-                  <null/>
+                  <string>Token</string>
                 </entry>
                 <entry>
                   <string>encoding</string>
-                  <string>ISO-8859-1</string>
+                  <string>UTF-8</string>
                 </entry>
                 <entry>
                   <string>taggerFlags</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
-                      <string>hu_szeged_kr.model</string>
+                      <string>/home/jdb/workspace/OntologyLearningTool/3rdparty/hunpos/models/suc2_parole_utf8.hunpos</string>
                     </localList>
                     <collectionType>java.util.Arrays$ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
@@ -231,7 +332,7 @@
               </localMap>
             </runtimeParams>
             <resourceType>gate.taggerframework.GenericTagger</resourceType>
-            <resourceName>Hunpos-HU-NoTokenization</resourceName>
+            <resourceName>HunposTokenization</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
@@ -264,7 +365,7 @@
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
     <resourceType>gate.creole.ConditionalSerialAnalyserController</resourceType>
-    <resourceName>Hunpos-HU-NoTokenization</resourceName>
+    <resourceName>HunposTokenization</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
       <localMap/>
