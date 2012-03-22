@@ -73,6 +73,9 @@ public class GenericTagger extends AbstractLanguageAnalyser implements
 
   // The annotations sets used for input and output
   private String inputASName, outputASName;
+  
+  // Whether the tagger expects a blank line between sentences
+  private Boolean blankLineAfterPeriod;
 
   // The character encoding the tagger expects and a regex to process
   // the output
@@ -367,16 +370,21 @@ public class GenericTagger extends AbstractLanguageAnalyser implements
         throw new ExecutionException("No " + inputAnnotationType
                 + " found in the document.");
       }
-
+ 
       // sort tokens according to their offsets
       List<Annotation> inputAnnotations = new ArrayList<Annotation>(annotSet);
       Collections.sort(inputAnnotations, new OffsetComparator());
 
+      String inputLine;
       // and now start writing them in a file
       for(int i = 0; i < inputAnnotations.size(); i++) {
+    	inputLine = taggerInputFor(inputAnnotations.get(i));
+    	
         // write the string to the file
-        bw.write(taggerInputFor(inputAnnotations.get(i)));
-
+        bw.write(inputLine);
+        if (blankLineAfterPeriod && inputLine.equals("."))
+        	bw.newLine();
+        
         // if there are more annotations to process then write a blank
         // line as well
         if(i + 1 < inputAnnotations.size()) bw.newLine();
@@ -825,12 +833,23 @@ public class GenericTagger extends AbstractLanguageAnalyser implements
   }
 
   @RunTime
-  @CreoleParameter(defaultValue = "ISO-8859-1", comment = "Character encoding for temporary files, must match "
+  @CreoleParameter(defaultValue = "UTF-8", comment = "Character encoding for temporary files, must match "
           + "the encoding of your tagger data files")
   public void setEncoding(String encoding) {
     this.encoding = encoding;
   }
 
+  public Boolean getBlankLineAfterPeriod() {
+    return blankLineAfterPeriod;
+  }
+
+  @Optional
+  @RunTime
+  @CreoleParameter(defaultValue = "false", comment = "Should a blank line be inserted in the input to the tagger after periods (.)?")
+  public void setBlankLineAfterPeriod(Boolean blankLineAfterPeriod) {
+    this.blankLineAfterPeriod = blankLineAfterPeriod;
+  }
+  
   public Boolean getFailOnUnmappableCharacter() {
     return failOnUnmappableCharacter;
   }

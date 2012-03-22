@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <CREOLE-DIRECTORY>
-  <JAR SCAN="true">TaggerFramework.jar</JAR>
+  <JAR SCAN="true">Tagger_Framework.jar</JAR>
 </CREOLE-DIRECTORY>

@@ -5,12 +5,37 @@
         <urlString>$gatehome$plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../../../../../../../OntologyLearningTool/3rdparty/gate/plugins/Tagger_Framework</urlString>
+        <urlString>$relpath$../../../Tagger_Framework/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../gate/plugins/ANNIE/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../TaggerFramework</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../../../../../../../bin/GATE-4.0/plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
   <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+    <corpus class="gate.util.persistence.CorpusPersistence">
+      <dsData class="gate.util.persistence.DSPersistence">
+        <className>gate.persist.SerialDataStore</className>
+        <storageUrlString>file:/home/jdb/uni/uppsala/2011-2012/thesis/results/GATE_hunpos/</storageUrlString>
+        <storageUrl class="gate.util.persistence.PersistenceManager$URLHolder">
+          <urlString>$relpath$../../../../../../../../uni/uppsala/2011-2012/thesis/results/GATE_hunpos/</urlString>
+        </storageUrl>
+      </dsData>
+      <persistenceID class="string">Corpus for Manskl_rattigh.pdf_00043___1332447711739___1433</persistenceID>
+      <resourceType>gate.corpora.SerialCorpusImpl</resourceType>
+      <resourceName>Corpus for Manskl_rattigh.pdf_00043</resourceName>
+      <initParams class="gate.util.persistence.MapPersistence">
+        <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+        <localMap/>
+      </initParams>
+    </corpus>
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
@@ -210,15 +235,19 @@
                   <string>Token</string>
                 </entry>
                 <entry>
+                  <string>blankLineAfterPeriod</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
                   <string>document</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>corpus</string>
+                  <string>taggerDir</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>taggerDir</string>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -230,18 +259,18 @@
                   <boolean>true</boolean>
                 </entry>
                 <entry>
-                  <string>outputASName</string>
-                  <string>Token</string>
-                </entry>
-                <entry>
                   <string>encoding</string>
                   <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>outputASName</string>
+                  <string>Token</string>
                 </entry>
                 <entry>
                   <string>taggerFlags</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
-                      <string>$relpath$/../../../../../hunpos/models/suc2_parole_utf8.hunpos</string>
+                      <string>/home/jdb/workspace/OntologyLearningTool/3rdparty/hunpos/models/suc2_parole_utf8.hunpos</string>
                     </localList>
                     <collectionType>java.util.Arrays$ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>

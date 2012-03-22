@@ -1,15 +1,15 @@
-<project name="TaggerFramework" default="jar" basedir="." >
+<project name="Tagger_Framework" default="jar" basedir="." >
   <!-- Prevent Ant from warning about includeantruntime not being set -->
   <property name="build.sysclasspath" value="ignore" />
 
   <property file="build.properties" />
 
-  <property name="gate.home" location="../.." />
+  <property name="gate.home" location="../../gate" />
   <property name="gate.lib" location="${gate.home}/lib" />
   <property name="gate.jar" location="${gate.home}/bin/gate.jar" />
   <property name="src.dir" location="src" />
   <property name="classes.dir" location="classes" />
-  <property name="jar.location" location="TaggerFramework.jar" />
+  <property name="jar.location" location="Tagger_Framework.jar" />
   <property name="doc.dir" location="doc" />
   <property name="javadoc.dir" location="${doc.dir}/javadoc" />
 
