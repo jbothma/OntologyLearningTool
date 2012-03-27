@@ -18,12 +18,15 @@ public class Lexicon {
 	}
 
 	public static void addEntry(LexicalEntry entry) throws CorruptIndexException, IOException {
-		//Out.prln("add lexical entry");
 		Document contactDocument  = new Document();
-		contactDocument.add(new Field("gf", entry.getGf(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("id", entry.getId(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("mf", entry.getMf(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("pf", entry.getPf(), Field.Store.YES, Field.Index.ANALYZED));
 		contactDocument.add(new Field("lem", entry.getLem(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("gf", entry.getGf(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("pos", entry.getPos(), Field.Store.YES, Field.Index.ANALYZED));
+		contactDocument.add(new Field("p", entry.getP(), Field.Store.YES, Field.Index.ANALYZED));
 		writer.addDocument(contactDocument);
-		//System.out.println("docs " + writer.numDocs());
 	}
 
 }

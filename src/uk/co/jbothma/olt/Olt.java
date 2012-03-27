@@ -1,14 +1,16 @@
 package uk.co.jbothma.olt;
 
-import java.util.Comparator;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.xml.xpath.XPathExpressionException;
+
 import org.apache.log4j.BasicConfigurator;
-import org.apache.pdfbox.pdfviewer.MapEntry;
+import org.xml.sax.SAXException;
 
 import gate.Annotation;
 import gate.AnnotationSet;
@@ -17,7 +19,6 @@ import gate.Document;
 import gate.Factory;
 import gate.FeatureMap;
 import gate.Gate;
-import gate.LanguageResource;
 import gate.persist.SerialDataStore;
 import gate.util.Err;
 import gate.util.GateException;
@@ -28,12 +29,14 @@ import gate.util.Out;
  * 
  */
 public class Olt {
-
+	private static String dataStorePath = "/home/jdb/thesis/results/GATE_hunpos_201203222255";
+	
 	/**
 	 * @param args
+	 * @throws SAXException 
+	 * @throws IOException 
 	 */
 	public static void main(String[] args) {
-		String dataStorePath = "/home/jdb/thesis/results/GATE_hunpos_201203222255";
 
 		// log to console
 		BasicConfigurator.configure();
@@ -47,6 +50,7 @@ public class Olt {
 		}
 
 		try {
+			Saldo saldo = new Saldo();
 
 			// create&open a new Serial Data Store
 			// pass the datastore class and path as parameteres
@@ -75,7 +79,7 @@ public class Olt {
 				AnnotationSet tokenAnnSet = tokenAnnLayer.get("Token");
 				
 				// Term Frequency Hash Map
-				Map<Object, Integer> termFreqHM = new HashMap();
+				Map<Object, Integer> termFreqHM = new HashMap<Object, Integer>();
 				
 				for (Annotation ann : tokenAnnSet) {
 					FeatureMap tokenFeatures = ann.getFeatures();
@@ -84,6 +88,9 @@ public class Olt {
 					// is it a Parole noun?
 					if (tokenCategory.substring(0, 1).equals("N")) {
 						String tokenString = (String) tokenFeatures.get("string");
+						String lemma = saldo.getLemma(tokenString);
+						
+						//Out.prln("lookup " + tokenString + "  " + lemma);
 						
 						// increment string's count
 						if (termFreqHM.containsKey(tokenString)) {
@@ -94,14 +101,14 @@ public class Olt {
 						}
 					}
 				}
-				
+				/*
 				MapLTEValueComparator comparator = new MapLTEValueComparator(termFreqHM);
 				TreeMap<Object, Integer> valueSortedTermFreq = new TreeMap<Object, Integer>(comparator);
 				valueSortedTermFreq.putAll(termFreqHM);
 				// Output term frequencies
 				for (Entry<Object, Integer> termEntry : valueSortedTermFreq.entrySet()) {
 					Out.prln("    " + termEntry.getValue() + "  " + termEntry.getKey());
-				}
+				}*/
 			}
 
 			// close data store
@@ -112,6 +119,15 @@ public class Olt {
 			Err.prln("cannot open " + dataStorePath);
 			gex.printStackTrace();
 			return;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XPathExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
