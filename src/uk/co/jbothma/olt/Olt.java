@@ -3,6 +3,7 @@ package uk.co.jbothma.olt;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -11,6 +12,10 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.xml.sax.SAXException;
+
+import uk.co.jbothma.saldo.Saldo;
+import uk.co.jbothma.saldo.SaldoException;
+import uk.co.jbothma.saldo.Word;
 
 import gate.Annotation;
 import gate.AnnotationSet;
@@ -50,8 +55,7 @@ public class Olt {
 		}
 
 		try {
-			Saldo saldo = new Saldo();
-
+	    	System.out.println(new java.util.Date());
 			// create&open a new Serial Data Store
 			// pass the datastore class and path as parameteres
 			SerialDataStore dataStore = (SerialDataStore) Factory
@@ -59,6 +63,11 @@ public class Olt {
 							+ dataStorePath);
 			dataStore.open();
 			Out.prln("serial datastore opened...");
+			
+			String saldoBinPath = "/home/jdb/uni/uppsala/2011-2012/thesis/sw_source/FM-SBLEX_svn/sblex/bin/saldo";
+			String saldoDictPath = "/home/jdb/uni/uppsala/2011-2012/thesis/sw_source/FM-SBLEX_svn/dicts/saldo.dict";
+			
+			Saldo saldo = new Saldo(saldoBinPath, saldoDictPath);
 
 			Out.prln("Documents:");
 			for (Object lrId : dataStore.getLrIds("gate.corpora.DocumentImpl")) {
@@ -86,11 +95,18 @@ public class Olt {
 					String tokenCategory = (String) tokenFeatures.get("category");
 					//Out.prln(tokenCategory.substring(0, 1));
 					// is it a Parole noun?
-					if (tokenCategory.substring(0, 1).equals("N")) {
+					if (tokenCategory.startsWith("NC")) {
 						String tokenString = (String) tokenFeatures.get("string");
-						String lemma = saldo.getLemma(tokenString);
+						if (!tokenString.matches("[a-zA-ZöäåÖÄÅ]+"))
+							continue;
 						
-						//Out.prln("lookup " + tokenString + "  " + lemma);
+						//Out.prln("lookup " + tokenString);
+						String lemma = "";
+						List<Word> saldoResults = saldo.getAnalysis(tokenString.toLowerCase());
+						if ((lemma = chooseNounLemma(saldoResults, tokenCategory)).equals(""))
+							lemma = "unknown";
+						
+						Out.prln("lemma " + tokenString + "  " + lemma + " " + saldoResults.size());
 						
 						// increment string's count
 						if (termFreqHM.containsKey(tokenString)) {
@@ -99,6 +115,9 @@ public class Olt {
 						} else {
 							termFreqHM.put(tokenString, 1);
 						}
+						
+//						if (tokenString.equals("saker"))
+//							break;
 					}
 				}
 				/*
@@ -111,7 +130,9 @@ public class Olt {
 				}*/
 			}
 
-			// close data store
+
+	    	System.out.println(new java.util.Date());
+			saldo.close();
 			dataStore.close();
 			dataStore = null;
 			Out.prln("serial datastore closed.");
@@ -122,13 +143,31 @@ public class Olt {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (XPathExpressionException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (SaldoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	private static String chooseNounLemma(List<Word> saldoResults, String parolePos) {
+		NounMorph wordMorph = new NounMorph(parolePos);
+		for (Word result : saldoResults) {
+			try {
+				NounMorph resultMorph = new NounMorph(result.getMorph());
+				if (wordMorph.equals(resultMorph))
+					return result.getLemma();
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "";
+	}
+	
 
 }
