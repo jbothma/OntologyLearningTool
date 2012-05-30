@@ -1,0 +1,28 @@
+Phase: firstpass
+Options: control = brill
+Input: Token
+Rule: LingFilter
+Priority: 20
+(
+  ({Token.kind==word, Token.category =~ "^AQ"})*
+  ({Token.kind==word, Token.category =~ "^N[CP]"})+
+): match
+-->
+:match.TermCandidate = {rule= "LingFilter" },
+{
+  // Keep the longest candidate and remove nested term candidates within it.
+  AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("match");
+  AnnotationSet containedMatchesAs = outputAS.get("TermCandidate").getContained(
+    matchAs.firstNode().getOffset(),
+    matchAs.lastNode().getOffset());
+  long matchLen, containedAnnLen;
+  matchLen = matchAs.lastNode().getOffset() - matchAs.firstNode().getOffset();
+  for(Annotation containedAnn : containedMatchesAs)
+  {
+    containedAnnLen = containedAnn.getEndNode().getOffset() - 
+        containedAnn.getStartNode().getOffset();
+    if (containedAnnLen != matchLen)
+      outputAS.remove(containedAnn);
+  }   
+}
+
