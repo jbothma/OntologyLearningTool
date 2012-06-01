@@ -1,6 +1,10 @@
+Imports: {
+  import gate.*;
+  import java.util.*;
+}
 Phase: firstpass
-Options: control = brill
-Input: Token
+Options: control = appelt
+Input: TermCandidate Token
 Rule: LingFilter
 Priority: 20
 (
@@ -10,19 +14,15 @@ Priority: 20
 -->
 :match.TermCandidate = {rule= "LingFilter" },
 {
-  // Keep the longest candidate and remove nested term candidates within it.
+  // Annotate last Token in TermCandidate as Head
   AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("match");
-  AnnotationSet containedMatchesAs = outputAS.get("TermCandidate").getContained(
+  AnnotationSet tokAnnots = matchAs.get("Token").getContained(
     matchAs.firstNode().getOffset(),
-    matchAs.lastNode().getOffset());
-  long matchLen, containedAnnLen;
-  matchLen = matchAs.lastNode().getOffset() - matchAs.firstNode().getOffset();
-  for(Annotation containedAnn : containedMatchesAs)
-  {
-    containedAnnLen = containedAnn.getEndNode().getOffset() - 
-        containedAnn.getStartNode().getOffset();
-    if (containedAnnLen != matchLen)
-      outputAS.remove(containedAnn);
-  }   
+    matchAs.lastNode().getOffset()
+  );
+  List<Annotation> tokAnnotList = gate.Utils.inDocumentOrder(tokAnnots);
+  Annotation headTok = tokAnnotList.get(tokAnnotList.size()-1);
+  FeatureMap features = Factory.newFeatureMap();
+  features.put("rule", "LingFilter");
+  outputAS.add(headTok.getStartNode(), headTok.getEndNode(), "Head", features);
 }
-
