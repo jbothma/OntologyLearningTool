@@ -1,0 +1,64 @@
+Phase: Ontological_Relations
+Input: TermCandidate Token
+Options: control = brill	
+
+rule: SubclassOfRelation1
+(
+	({TermCandidate}):superconcept
+	({Token.kind==punctuation})?
+	{Token.string=="såsom"}
+	({TermCandidate}({Token.string==","}|{Token.string=="och"}|{Token.string=="eller"})?)+:subconcept
+):subclassOf
+-->
+:subclassOf.SubclassOfRelation = { rule = "SubclassOfRelation1" },
+:subconcept.Domain = { rule = "SubclassOfRelation1" },
+:superconcept.Range = { rule = "SubclassOfRelation1" },
+{
+  // Keep the longest candidate and remove nested term candidates within it.
+  AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("subconcept");
+  AnnotationSet containedMatchesAs = outputAS.get("Domain").getContained(
+    matchAs.firstNode().getOffset(),
+    matchAs.lastNode().getOffset());
+  long matchLen, containedAnnLen;
+  matchLen = matchAs.lastNode().getOffset() - matchAs.firstNode().getOffset();
+  for(Annotation containedAnn : containedMatchesAs)
+  {
+    containedAnnLen = containedAnn.getEndNode().getOffset() - 
+        containedAnn.getStartNode().getOffset();
+    if (containedAnnLen != matchLen)
+      outputAS.remove(containedAnn);
+  }   
+},
+{
+  // Keep the longest candidate and remove nested term candidates within it.
+  AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("subclassOf");
+  AnnotationSet containedMatchesAs = outputAS.get("SubclassOfRelation").getContained(
+    matchAs.firstNode().getOffset(),
+    matchAs.lastNode().getOffset());
+  long matchLen, containedAnnLen;
+  matchLen = matchAs.lastNode().getOffset() - matchAs.firstNode().getOffset();
+  for(Annotation containedAnn : containedMatchesAs)
+  {
+    containedAnnLen = containedAnn.getEndNode().getOffset() - 
+        containedAnn.getStartNode().getOffset();
+    if (containedAnnLen != matchLen)
+      outputAS.remove(containedAnn);
+  }   
+},
+{
+  // Keep the longest candidate and remove nested term candidates within it.
+  AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("superconcept");
+  AnnotationSet containedMatchesAs = outputAS.get("Range").getContained(
+    matchAs.firstNode().getOffset(),
+    matchAs.lastNode().getOffset());
+  long matchLen, containedAnnLen;
+  matchLen = matchAs.lastNode().getOffset() - matchAs.firstNode().getOffset();
+  for(Annotation containedAnn : containedMatchesAs)
+  {
+    containedAnnLen = containedAnn.getEndNode().getOffset() - 
+        containedAnn.getStartNode().getOffset();
+    if (containedAnnLen != matchLen)
+      outputAS.remove(containedAnn);
+  }   
+}
+
