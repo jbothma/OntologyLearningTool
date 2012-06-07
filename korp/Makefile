@@ -1,13 +1,13 @@
-corpus = korpusnamn
+corpus = jrc_1
 original_dir = original
 files := $(basename $(notdir $(wildcard $(original_dir)/*.xml)))
 
-vrt_annotations = word pos msd baseform lemgram saldo prefix suffix ref dephead.ref deprel sentence.id n
-vrt_columns     = word pos msd lemma    lex     saldo prefix suffix ref dephead     deprel
-vrt_structs     = -    -   -   -        -       -     -      -      -   -           -      sentence:id
+vrt_annotations = word pos msd baseform sentence.n paragraph.n sentence.id n
+vrt_columns     = word pos msd lemma    
+vrt_structs     = -    -   -   -        sentence:n paragraph:n sentence:id
 
-xml_elements    = text
-xml_annotations = text
+xml_elements    = text p
+xml_annotations = text paragraph
 xml_skip =
 
 include ../Makefile.common
