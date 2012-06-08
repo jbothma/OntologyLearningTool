@@ -1,0 +1,24 @@
+Imports: {
+  import gate.*;
+  import java.util.*;
+}
+Phase: firstpass
+Options: control = brill
+Input: TermCandidate
+Rule: LastWordHead
+Priority: 20
+({TermCandidate}): match
+-->
+{
+  // Annotate last Token in TermCandidate as Head
+  AnnotationSet matchAs = (gate.AnnotationSet)bindings.get("match");
+  AnnotationSet tokAnnots = inputAS.get("w").getContained(
+    matchAs.firstNode().getOffset(),
+    matchAs.lastNode().getOffset()
+  );
+  List<Annotation> tokAnnotList = gate.Utils.inDocumentOrder(tokAnnots);
+  Annotation headTok = tokAnnotList.get(tokAnnotList.size()-1);
+  FeatureMap features = Factory.newFeatureMap();
+  features.put("rule", "LastWordHead");
+  outputAS.add(headTok.getStartNode(), headTok.getEndNode(), "Head", features);
+}
