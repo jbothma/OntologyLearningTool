@@ -1,15 +1,15 @@
 // Translated the "such as" rule from Text2Onto's English grammars and modified somewhat.
 
 Phase: Ontological_Relations
-Input: TermCandidate Token
+Input: TermCandidate w
 Options: control = appelt	
 
 rule: SubclassOfRelation1
 (
 	({TermCandidate}):superconcept
-	({Token.kind==punctuation})?
-	{Token.string=="såsom"}
-	({TermCandidate}({Token.string==","}|{Token.string=="och"}|{Token.string=="eller"})?)+:subconcept
+	({w.string==","})?
+	{w.string=="såsom"}
+	({TermCandidate}({w.string==","}|{w.string=="och"}|{w.string=="eller"})?)+:subconcept
 ):subclassOf
 -->
 :subclassOf.SubclassOf = { rule = "SubclassOfRelation1" },
