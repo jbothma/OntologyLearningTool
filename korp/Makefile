@@ -2,15 +2,15 @@ corpus = jrc_1
 original_dir = original
 files := $(basename $(notdir $(wildcard $(original_dir)/*.xml)))
 
-vrt_annotations = word pos msd baseform sentence.n paragraph.n sentence.id n
-vrt_columns     = word pos msd lemma    
-vrt_structs     = -    -   -   -        sentence:n paragraph:n sentence:id
+vrt_annotations = word pos msd baseform ref dephead.ref deprel sentence.n paragraph.n sentence.id n
+vrt_columns     = word pos msd lemma    ref dephead     deprel
+vrt_structs     = -    -   -   -        -   -           -      sentence:n paragraph:n sentence:id
 
 xml_elements    = text p
 xml_annotations = text paragraph
 xml_skip =
 
-include ../Makefile.common
+include $(KORP_INSTALL)/corpora/Makefile.common
 
 token_chunk = sentence
 token_segmenter = punkt_word
@@ -26,4 +26,4 @@ paragraph_segmenter = blanklines
 #                                  RULES                                       #
 ################################################################################
 
-include ../Makefile.rules
+include $(KORP_INSTALL)/corpora/Makefile.rules
